@@ -1,0 +1,113 @@
+{
+  "info": {
+    "_postman_id": "weather-api-testing-collection",
+    "name": "Weather API Testing Suite",
+    "description": "Complete API testing for OpenWeather endpoints: fetchWeather, fetchForecast, fetchAirQuality",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET Weather - fetchWeather",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "https://api.openweathermap.org/data/2.5/weather?q=London&units=metric&appid={{API_KEY}}",
+          "protocol": "https",
+          "host": ["api", "openweathermap", "org"],
+          "path": ["data", "2.5", "weather"],
+          "query": [
+            {
+              "key": "q",
+              "value": "London"
+            },
+            {
+              "key": "units",
+              "value": "metric"
+            },
+            {
+              "key": "appid",
+              "value": "{{API_KEY}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. GET Forecast - fetchForecast",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "https://api.openweathermap.org/data/2.5/forecast?lat=51.5074&lon=-0.1278&units=metric&appid={{API_KEY}}",
+          "protocol": "https",
+          "host": ["api", "openweathermap", "org"],
+          "path": ["data", "2.5", "forecast"],
+          "query": [
+            {
+              "key": "lat",
+              "value": "51.5074"
+            },
+            {
+              "key": "lon",
+              "value": "-0.1278"
+            },
+            {
+              "key": "units",
+              "value": "metric"
+            },
+            {
+              "key": "appid",
+              "value": "{{API_KEY}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. GET Air Quality - fetchAirQuality",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "https://api.openweathermap.org/data/2.5/air_pollution?lat=51.5074&lon=-0.1278&appid={{API_KEY}}",
+          "protocol": "https",
+          "host": ["api", "openweathermap", "org"],
+          "path": ["data", "2.5", "air_pollution"],
+          "query": [
+            {
+              "key": "lat",
+              "value": "51.5074"
+            },
+            {
+              "key": "lon",
+              "value": "-0.1278"
+            },
+            {
+              "key": "appid",
+              "value": "{{API_KEY}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
