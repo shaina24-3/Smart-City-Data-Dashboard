@@ -21,6 +21,29 @@ function App() {
   const [forecastData, setForecastData] = useState<Array<{ time: string; temp: number }>>([]);
   const [searchHistory, setSearchHistory] = useState<StoredSearch[]>([]);
 
+  // THEME: 'light' | 'dark'
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    try {
+      const saved = localStorage.getItem('theme');
+      return saved === 'dark' ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
+  });
+
+  // keep html element class in sync
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') root.classList.add('dark');
+    else root.classList.remove('dark');
+
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {}
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+
   const loadWeatherData = async (city: string) => {
     setLoading(true);
     setError(null);
@@ -68,37 +91,50 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    loadWeatherData('London');
-    setSearchHistory(getSearches());
-  }, []);
+ useEffect(() => {
+  const savedCity = localStorage.getItem("lastCity");
+
+  if (savedCity) {
+    loadWeatherData(savedCity);
+  } else {
+    loadWeatherData("London");
+  }
+
+  setSearchHistory(getSearches());
+}, []);
+
 
   const handleSearch = (city: string) => {
-    loadWeatherData(city);
-  };
+  loadWeatherData(city);
+  localStorage.setItem("lastCity", city);
+};
+
+  const dark = theme === 'dark';
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className={`flex min-h-screen ${dark ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <Sidebar />
 
       <div className="flex-1 flex flex-col">
-        <Header onSearch={handleSearch} />
+        <Header onSearch={handleSearch} onToggleTheme={toggleTheme} dark={dark} />
 
         <main className="flex-1 p-8">
           {loading && (
             <div className="flex items-center justify-center h-64">
-              <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-              <span className="ml-2 text-gray-600">Loading weather data...</span>
+              <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+              <span className={`${dark ? 'text-gray-300' : 'text-gray-600'} ml-2`}>
+                Loading weather data...
+              </span>
             </div>
           )}
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+            <div className={`${dark ? 'bg-red-900 border-red-800' : 'bg-red-50 border-red-200'} border rounded-lg p-6 mb-6`}>
               <div className="flex items-center space-x-2">
-                <CloudOff className="w-6 h-6 text-red-600" />
+                <CloudOff className="w-6 h-6 text-red-400" />
                 <div>
-                  <p className="font-semibold text-red-900">Error</p>
-                  <p className="text-red-700">{error}</p>
+                  <p className={`${dark ? 'text-red-200' : 'text-red-900'} font-semibold`}>Error</p>
+                  <p className={`${dark ? 'text-red-100' : 'text-red-700'}`}>{error}</p>
                 </div>
               </div>
             </div>
@@ -107,8 +143,8 @@ function App() {
           {!loading && !error && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">{currentCity}</h2>
-                <p className="text-gray-600 capitalize">{weatherDescription}</p>
+                <h2 className={`${dark ? 'text-gray-100' : 'text-gray-900'} text-3xl font-bold mb-2`}>{currentCity}</h2>
+                <p className={`${dark ? 'text-gray-300' : 'text-gray-600'} capitalize`}>{weatherDescription}</p>
               </div>
 
               <StatCards
@@ -116,9 +152,10 @@ function App() {
                 humidity={humidity}
                 windSpeed={windSpeed}
                 aqi={aqi}
+                dark={dark}
               />
 
-              <WeatherChart forecastData={forecastData} />
+              <WeatherChart forecastData={forecastData} dark={dark} />
 
               <RecentTable searches={searchHistory} onCityClick={handleSearch} />
             </div>
