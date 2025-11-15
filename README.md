@@ -48,11 +48,11 @@ Add your OpenWeather API key in .env:
 VITE_WEATHER_API_KEY=66c494bfa681df5e4fa4f3a80955a074
 
 👥 Team Contribution
-Member	Contribution
-Member 1    API Integration + Weather Fetching
-Member 2	Charts & UI Components (StatCards, WeatherChart)
-Member 3	UI Structure + Sidebar + Search History
-
+| **Member**   | **Contribution**                                                                 |
+| ------------ | -------------------------------------------------------------------------------- |
+| **Member 1** | API Integration & Weather Data Fetching (Current Weather, Forecast, Air Quality) |
+| **Member 2** | Charts & UI Components (StatCards, WeatherChart, Dashboard Visuals)              |
+| **Member 3** | UI Structure, Sidebar Navigation, Search History Module & Recent Searches Table  |
 
 ⭐ Why This Project?
 
