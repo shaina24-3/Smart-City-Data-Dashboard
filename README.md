@@ -1,4 +1,5 @@
 # Smart-City-Data-Dashboard
+
 A real-time Smart City Data Dashboard that fetches and visualizes publicly available data from open APIs across the world. This dashboard aggregates key smart-city indicators such as *air quality, **weather, **traffic density, **energy consumption, and **waste management*, making city analytics accessible and insightful.
 
 🚀 Features
